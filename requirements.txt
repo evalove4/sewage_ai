@@ -1,5 +1,6 @@
 streamlit
 openai
+OpenAI
 fpdf
 unstructured
 pysqlite3-binary
