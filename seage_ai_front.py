@@ -1,11 +1,14 @@
 import streamlit as st
 import pandas as pd
+import openai import OpenAI
 import openai
 import os
 from fpdf import FPDF
 from datetime import datetime
 
 openai.api_key = st.secrets['OPENAI_API_KEY']
+
+client = OpenAI(api_key=st.secrets['OPENAI_API_KEY'])
 
 st.set_page_config(page_title="하수처리장 데이터 분석기", layout="wide")
 st.title("💧 하수/폐수처리장 시계열 데이터 분석기")
@@ -46,7 +49,7 @@ if st.button("🔧 AI에게 정형화 방식 요청"):
 
 이 데이터를 분석에 활용하기 위해 '시간, 항목1, 항목2…' 형태로 어떻게 정형화하면 좋을지 제안해 주세요.
 """
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4",
             messages=[
                 {"role": "system", "content": "당신은 숙련된 데이터 정제 전문가입니다."},
@@ -71,7 +74,7 @@ if st.button("🔧 AI에게 정형화 방식 요청"):
         for fname in dataframes:
             combined_prompt += f"\n---\n📁 파일: {fname}\n📄 설명: {descriptions[fname]}\n📄 정형화 제안: {summaries[fname]}\n📊 최근 데이터:\n{dataframes[fname].tail().to_string(index=False)}\n"
 
-        final_response = openai.ChatCompletion.create(
+        final_response = client.chat.completions.create(
             model="gpt-4",
             messages=[
                 {"role": "system", "content": "당신은 숙련된 환경 데이터 분석가입니다."},
