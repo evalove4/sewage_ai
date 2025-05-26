@@ -1,6 +1,6 @@
 import streamlit as st
 import pandas as pd
-import openai import OpenAI
+from openai import OpenAI
 import openai
 import os
 from fpdf import FPDF
