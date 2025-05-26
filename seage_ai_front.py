@@ -56,7 +56,11 @@ if st.button("🔧 AI에게 정형화 방식 요청"):
                 {"role": "user", "content": prompt}
             ]
         )
-        summary = response['choices'][0]['message']['content']
+
+        #summary = response['choices'][0]['message']['content'] 
+        summary = response.choices[0].message.content
+
+        
         summaries[fname] = summary
         st.subheader(f"📄 {fname} 정형화 제안")
         st.markdown(summary)
@@ -82,7 +86,8 @@ if st.button("🔧 AI에게 정형화 방식 요청"):
             ]
         )
 
-        analysis_result = final_response['choices'][0]['message']['content']
+        #analysis_result = final_response['choices'][0]['message']['content']
+        analysis_result = final_response.choices[0].message.content
         st.success("✅ 분석 완료")
         st.markdown(analysis_result)
 
