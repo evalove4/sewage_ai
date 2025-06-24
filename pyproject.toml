@@ -8,6 +8,7 @@ dependencies = [
     "fpdf>=1.7.2",
     "langchain>=0.3.26",
     "langchain-community>=0.3.26",
+    "langchain-openai>=0.3.25",
     "markdown>=3.8.2",
     "openai>=1.91.0",
     "openpyxl>=3.1.5",
