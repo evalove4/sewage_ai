@@ -8,3 +8,5 @@ protobuf==3.20.0
 markdown
 pypdf
 openpyxl
+pandas
+langchain
