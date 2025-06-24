@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
-from langchain.chat_models import ChatOpenAI
+# from langchain.chat_models import ChatOpenAI
+from langchain_community.chat_models import ChatOpenAI
 from langchain.schema import SystemMessage, HumanMessage
 
 st.set_page_config(page_title="엑셀 데이터 필터링", layout="wide")
@@ -26,8 +27,12 @@ if uploaded_file is not None:
     st.write(filtered_df)
 
     if st.checkbox("LLM에게 요약 요청"):
-        llm = ChatOpenAI()
-        system_msg = SystemMessage(content="너는 데이터 분석 도우미야. 사용자에게 친절하게 답변해.")
-        user_msg = HumanMessage(content=f"다음 데이터에 대한 간단한 요약을 해줘:\n{filtered_df.head().to_string()}")
-        response = llm([system_msg, user_msg])
-        st.write(response.content)
+        openai_api_key = st.text_input("OpenAI API Key를 입력하세요", type="password")
+        if openai_api_key:
+            llm = ChatOpenAI(api_key=openai_api_key)
+            system_msg = SystemMessage(content="너는 데이터 분석 도우미야. 사용자에게 친절하게 답변해.")
+            user_msg = HumanMessage(content=f"다음 데이터에 대한 간단한 요약을 해줘:\n{filtered_df.head().to_string()}")
+            response = llm.invoke([system_msg, user_msg])
+            st.write(response.content)
+        else:
+            st.warning("OpenAI API Key를 입력해주세요.")
